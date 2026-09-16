@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResultHub - Teacher View Results</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+    <!-- TOP NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>ResultHub</span>
+            </div>
+
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html" class="nav-link"> <i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="teacher-add-result.html" class="nav-link"> <i class="fas fa-plus-circle"></i> Add Result</a></li>
+                <li><a href="teacher-view-results.html" class="nav-link active"> <i class="fas fa-file-alt"></i> View Results</a></li>
+                <li><a href="teacher-profile.html" class="nav-link"> <i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="navbar-right">
+                <span id="userDisplay" class="user-display"></span>
+                <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="logoutBtn" class="btn-logout" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="page-header">
+            <h2><i class="fas fa-chalkboard-user"></i> All Student Results</h2>
+            <p>View and manage all stored student results.</p>
+        </div>
+
+        <!-- Filter and Search -->
+        <div class="filter-section">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="resultsSearch" placeholder="Search by name or roll number...">
+            </div>
+            <button class="btn-filter" id="downloadAllBtn">
+                <i class="fas fa-download"></i> Download All
+            </button>
+            <button class="btn-filter btn-danger" id="clearAllBtn">
+                <i class="fas fa-trash"></i> Clear All
+            </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="quick-stats">
+            <div class="stat-box">
+                <i class="fas fa-graduation-cap"></i>
+                <div>
+                    <p>Total Students</p>
+                    <h4 id="totalStudentsCount">0</h4>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-file-alt"></i>
+                <div>
+                    <p>Total Results</p>
+                    <h4 id="totalResultsCount">0</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Container -->
+        <div id="allResultsContainer" class="results-container">
+            <p class="empty-state">No results added yet. <a href="teacher-add-result.html">Add a result</a></p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

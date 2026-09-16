@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResultHub - Teacher Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+    <!-- TOP NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>ResultHub</span>
+            </div>
+
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html" class="nav-link"> <i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="teacher-add-result.html" class="nav-link"> <i class="fas fa-plus-circle"></i> Add Result</a></li>
+                <li><a href="teacher-view-results.html" class="nav-link"> <i class="fas fa-file-alt"></i> View Results</a></li>
+                <li><a href="teacher-profile.html" class="nav-link active"> <i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="navbar-right">
+                <span id="userDisplay" class="user-display"></span>
+                <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="logoutBtn" class="btn-logout" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="page-header">
+            <h2><i class="fas fa-user-circle"></i> Teacher Profile</h2>
+            <p>Manage your profile information</p>
+        </div>
+
+        <div class="form-container">
+            <form id="teacherProfileForm">
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="profileName">Full Name <span class="required">*</span></label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-user"></i>
+                        <input 
+                            type="text" 
+                            id="profileName" 
+                            placeholder="Enter your full name"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="profileEmail">Email <span class="required">*</span></label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-envelope"></i>
+                        <input 
+                            type="email" 
+                            id="profileEmail" 
+                            placeholder="Enter your email"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Department -->
+                <div class="form-group">
+                    <label for="profileDepartment">Department</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-building"></i>
+                        <input 
+                            type="text" 
+                            id="profileDepartment" 
+                            placeholder="e.g., Science, Mathematics"
+                        >
+                    </div>
+                </div>
+
+                <!-- Experience -->
+                <div class="form-group">
+                    <label for="profileExperience">Years of Experience</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-briefcase"></i>
+                        <input 
+                            type="number" 
+                            id="profileExperience" 
+                            min="0" 
+                            placeholder="e.g., 5"
+                        >
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-save"></i> Save Profile
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResultHub - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+    <!-- TOP NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <!-- Logo -->
+            <div class="navbar-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>ResultHub</span>
+            </div>
+
+            <!-- Navbar Links -->
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html" class="nav-link active"> <i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="teacher-add-result.html" class="nav-link"> <i class="fas fa-plus-circle"></i> Add Result</a></li>
+                <li><a href="teacher-view-results.html" class="nav-link"> <i class="fas fa-file-alt"></i> View Results</a></li>
+                <li><a href="teacher-profile.html" class="nav-link"> <i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <!-- Right Section -->
+            <div class="navbar-right">
+                <span id="userDisplay" class="user-display"></span>
+
+                <!-- Dark Mode Toggle -->
+                <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <!-- Logout Button -->
+                <button id="logoutBtn" class="btn-logout" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- DASHBOARD PAGE -->
+        <div id="dashboard" class="page active">
+            <div class="page-header">
+                <h2>Dashboard</h2>
+                <p>Welcome back! Here's your academic overview.</p>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3 id="totalSubjects">0</h3>
+                        <p>Total Subjects</p>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3 id="avgPercentage">0%</h3>
+                        <p>Average Percentage</p>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3 id="avgGrade">N/A</h3>
+                        <p>Average Grade</p>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <h3 id="highestScore">0</h3>
+                        <p>Highest Score</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Results Table -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h3>Recent Results</h3>
+                    <a href="#" class="view-all-btn" onclick="switchPage('view-results'); return false;">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div id="recentResultsContainer" class="recent-results-table">
+                    <p class="empty-state">No results yet. <a onclick="switchPage('add-result'); return false;">Add your first result</a></p>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-box">
+                    <i class="fas fa-graduation-cap"></i>
+                    <div>
+                        <p>Academic Year</p>
+                        <h4>2025-2026</h4>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-calendar"></i>
+                    <div>
+                        <p>Last Updated</p>
+                        <h4 id="lastUpdated">Never</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADD RESULT PAGE -->
+        <div id="add-result" class="page">
+            <div class="page-header">
+                <h2>Add Result</h2>
+                <p>Enter your exam results for multiple subjects</p>
+            </div>
+
+            <div class="form-container">
+                <form id="addResultForm">
+                    <div class="form-section">
+                        <h3>Exam Details</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Exam Name <span class="required">*</span></label>
+                                <input type="text" id="examName" placeholder="e.g., Mid-Term, Final Exam" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Exam Date <span class="required">*</span></label>
+                                <input type="date" id="examDate" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Subject Marks</h3>
+                        <div id="subjectsContainer">
+                            <div class="subject-input-row">
+                                <div class="form-group">
+                                    <label>Subject Name <span class="required">*</span></label>
+                                    <input type="text" class="subject-name" placeholder="e.g., Mathematics" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Marks Obtained <span class="required">*</span></label>
+                                    <input type="number" class="subject-marks" min="0" max="100" placeholder="0-100" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Total Marks <span class="required">*</span></label>
+                                    <input type="number" class="subject-total" min="1" placeholder="100" value="100" required>
+                                </div>
+                                <button type="button" class="btn-remove-subject" onclick="removeSubjectRow(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-add-subject" onclick="addSubjectRow()">
+                            <i class="fas fa-plus"></i> Add Another Subject
+                        </button>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Save Result
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="resetResultForm()">
+                            <i class="fas fa-redo"></i> Clear
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- VIEW RESULTS PAGE -->
+        <div id="view-results" class="page">
+            <div class="page-header">
+                <h2>View Results</h2>
+                <p>Manage and track all your academic results</p>
+            </div>
+
+            <!-- Filter and Search -->
+            <div class="filter-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="resultsSearch" placeholder="Search by subject or exam name...">
+                </div>
+                <select id="filterSemester" class="filter-select">
+                    <option value="">All Exams</option>
+                </select>
+                <button class="btn-filter" id="downloadPdfBtn">
+                    <i class="fas fa-download"></i> Download PDF
+                </button>
+            </div>
+
+            <!-- Results Container -->
+            <div id="resultsContainer" class="results-container">
+                <p class="empty-state">No results added yet. <a onclick="switchPage('add-result'); return false;">Add a result</a></p>
+            </div>
+        </div>
+
+        <!-- ANALYTICS PAGE -->
+        <div id="analytics" class="page">
+            <div class="page-header">
+                <h2>Analytics</h2>
+                <p>Visual insights into your academic performance</p>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="chart-container">
+                    <h3>Subject Performance</h3>
+                    <canvas id="performanceChart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <h3>Grade Distribution</h3>
+                    <canvas id="gradeChart"></canvas>
+                </div>
+
+                <div class="chart-container full-width">
+                    <h3>Score Trends</h3>
+                    <canvas id="trendsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROFILE PAGE -->
+        <div id="profile" class="page">
+            <div class="page-header">
+                <h2>Profile</h2>
+                <p>Manage your account information</p>
+            </div>
+
+            <div class="profile-container-main">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='30' r='20' fill='%233b82f6'/%3E%3Cpath d='M 20 80 Q 20 60 50 60 Q 80 60 80 80' fill='%233b82f6'/%3E%3C/svg%3E" alt="Profile" class="profile-avatar">
+                        <div class="profile-info">
+                            <h3 id="profileName">Student User</h3>
+                            <p id="profileEmail">student@university.edu</p>
+                            <span class="badge">Active</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="detail-row">
+                            <label>Full Name</label>
+                            <p id="fullNameDisplay">Student User</p>
+                        </div>
+                        <div class="detail-row">
+                            <label>Email</label>
+                            <p id="emailDisplay">student@university.edu</p>
+                        </div>
+                        <div class="detail-row">
+                            <label>Student ID</label>
+                            <p>STU-2025-001</p>
+                        </div>
+                        <div class="detail-row">
+                            <label>Academic Year</label>
+                            <p>2025-2026</p>
+                        </div>
+                        <div class="detail-row">
+                            <label>Department</label>
+                            <p>Computer Science</p>
+                        </div>
+                        <div class="detail-row">
+                            <label>Campus</label>
+                            <p>Main Campus</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SETTINGS PAGE -->
+        <div id="settings" class="page">
+            <div class="page-header">
+                <h2>Settings</h2>
+                <p>Customize your experience</p>
+            </div>
+
+            <div class="settings-container">
+                <div class="settings-section">
+                    <h3>Appearance</h3>
+                    <div class="settings-item">
+                        <div class="settings-label">
+                            <p>Dark Mode</p>
+                            <small>Toggle between light and dark theme</small>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="darkModeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Notifications</h3>
+                    <div class="settings-item">
+                        <div class="settings-label">
+                            <p>Email Notifications</p>
+                            <small>Receive updates via email</small>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-label">
+                            <p>Push Notifications</p>
+                            <small>Browser notifications for new results</small>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Data</h3>
+                    <div class="settings-item">
+                        <div class="settings-label">
+                            <p>Export Data</p>
+                            <small>Download all your results as JSON</small>
+                        </div>
+                        <button class="btn-small" id="exportDataBtn">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-label">
+                            <p>Clear All Data</p>
+                            <small>Delete all stored results (cannot be undone)</small>
+                        </div>
+                        <button class="btn-small btn-danger" id="clearDataBtn">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Account</h3>
+                    <div class="settings-item">
+                        <div class="settings-label">
+                            <p>Change Password</p>
+                            <small>Update your login password</small>
+                        </div>
+                        <button class="btn-small" id="changePasswordBtn">
+                            <i class="fas fa-key"></i> Change
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HELP PAGE -->
+        <div id="help" class="page">
+            <div class="page-header">
+                <h2>Help & Support</h2>
+                <p>Get answers to common questions</p>
+            </div>
+
+            <div class="help-container">
+                <div class="faq-section">
+                    <h3>Frequently Asked Questions</h3>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do I add my results?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Navigate to the "Add Result" section from the navbar. Enter your exam name, date, and individual subject marks. You can add multiple subjects at once and the system will automatically calculate your percentage and grade.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Where is my data stored?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Your data is stored locally in your browser using localStorage. This means your results are only stored on your device and not sent to any server. Your data remains private and secure.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How is my grade calculated?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Grades are calculated based on your percentage: A (90-100%), B (80-89%), C (70-79%), D (60-69%), F (Below 60%). The system automatically assigns grades for each subject and calculates your overall GPA.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Can I edit or delete my results?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! In the "View Results" section, you can click on any result card to view detailed marks for each subject, and use the edit or delete buttons to modify or remove results as needed.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do I download my results as PDF?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Go to the "View Results" section and click the "Download PDF" button at the top. This will generate a professional PDF report of all your results with details and analytics.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What happens when I logout?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>When you logout, you'll be redirected to the login page. Your data remains safely stored in your browser and won't be deleted. Simply login again with the same credentials to access your results.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="support-contact">
+                    <h3>Need More Help?</h3>
+                    <p>Our support team is here to help. Contact us at:</p>
+                    <p><i class="fas fa-envelope"></i> support@resulthub.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Modal for Detailed Results -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Result Details</h2>
+            <div id="modalBody"></div>
+            <div class="modal-actions">
+                <button class="btn-primary" id="editBtn">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="btn-danger" id="deleteBtn">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <button class="btn-secondary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://html2pdf.blob.core.windows.net/html2pdf/html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResultHub - Teacher Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+    <!-- TOP NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>ResultHub</span>
+            </div>
+
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html" class="nav-link"> <i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="teacher-add-result.html" class="nav-link active"> <i class="fas fa-plus-circle"></i> Add Result</a></li>
+                <li><a href="teacher-view-results.html" class="nav-link"> <i class="fas fa-file-alt"></i> View Results</a></li>
+                <li><a href="teacher-profile.html" class="nav-link"> <i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+
+            <div class="navbar-right">
+                <span id="userDisplay" class="user-display"></span>
+                <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="logoutBtn" class="btn-logout" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="page-header">
+            <h2><i class="fas fa-chalkboard-user"></i> Teacher Portal - Add Student Result</h2>
+            <p>Add results for any student dynamically. Each student is identified by their roll number.</p>
+        </div>
+
+        <div class="form-container teacher-form">
+            <form id="addStudentResultForm">
+                <!-- Student Details Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Student Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Student Name <span class="required">*</span></label>
+                            <input type="text" id="studentName" placeholder="e.g., Raj Kumar" required>
+                            <small id="nameError" class="error-message"></small>
+                        </div>
+                        <div class="form-group">
+                            <label>Roll Number <span class="required">*</span></label>
+                            <input type="text" id="rollNumber" placeholder="e.g., 2024001" required>
+                            <small id="rollError" class="error-message"></small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exam Details Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-calendar"></i> Exam Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Exam Name <span class="required">*</span></label>
+                            <input type="text" id="examName" placeholder="e.g., Mid-Term, Final Exam" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Exam Date <span class="required">*</span></label>
+                            <input type="date" id="examDate" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subject Marks Section -->
+                <div class="form-section">
+                    <h3><i class="fas fa-book"></i> Subject Marks</h3>
+                    <div id="subjectsContainer">
+                        <div class="subject-input-row">
+                            <div class="form-group">
+                                <label>Subject Name <span class="required">*</span></label>
+                                <input type="text" class="subject-name" placeholder="e.g., Mathematics" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Marks Obtained <span class="required">*</span></label>
+                                <input type="number" class="subject-marks" min="0" max="100" placeholder="0-100" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Marks <span class="required">*</span></label>
+                                <input type="number" class="subject-total" min="1" placeholder="100" value="100" required>
+                            </div>
+                            <button type="button" class="btn-remove-subject" onclick="removeSubjectRow(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add-subject" onclick="addSubjectRow()">
+                        <i class="fas fa-plus"></i> Add Another Subject
+                    </button>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Add Result
+                    </button>
+                    <button type="reset" class="btn-secondary" onclick="resetForm()">
+                        <i class="fas fa-redo"></i> Clear Form
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Recent Additions -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h3>Recently Added Results</h3>
+            </div>
+            <div id="recentAdditionsContainer" class="recent-results-table">
+                <p class="empty-state">No results added yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
